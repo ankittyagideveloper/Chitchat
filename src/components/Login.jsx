@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import logo from "../assets/ChitChat.png";
+import logo from "../assets/chitChat.png";
 import goggle from "../assets/google.png";
 import { Link, useNavigate } from "react-router-dom";
 import { provider, auth } from "../config";
