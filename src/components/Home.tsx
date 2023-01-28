@@ -6,7 +6,7 @@ import { getAuth, signOut } from "firebase/auth";
 
 function Home() {
   const auth = getAuth();
-
+  const [loading, setLoading] = useState(false);
   const [userLoginInfo, setUserLoginInfo] = useState({});
   const dispatch = useDispatch();
   const { userName, userEmail, phoneNumber, profileImage } = useSelector(

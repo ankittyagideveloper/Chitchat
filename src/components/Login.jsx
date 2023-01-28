@@ -7,16 +7,18 @@ import { provider, auth } from "../config";
 import { signInWithPopup } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { userInfo } from "../sclices/userLoginSlice";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function Login() {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
   const history = useNavigate();
   const handleGoogleLogin = () => {
+    setLoading(true);
     signInWithPopup(auth, provider)
       .then((response) => {
         console.log(response, "user Info");
-        debugger;
         dispatch(
           userInfo({
             userName: response?.user?.displayName,
@@ -26,15 +28,24 @@ function Login() {
             profileImage: response?.user?.photoURL,
           })
         );
+        setLoading(false);
         history("/home");
       })
       .catch((errors) => console.log(errors));
   };
   return (
     <div
-      className="px-0 sm:px-10 md:px-16 lg:px-24 h-full min-h-[100vh]"
-      style={{ background: "linear-gradient(90deg, #000000, #0d274c)" }}
+      className={"px-0 sm:px-10 md:px-16 lg:px-24 h-full min-h-[100vh] "}
+      style={{
+        background: "linear-gradient(90deg, #000000, #0d274c)",
+        opacity: `${loading && "0.5"}`,
+      }}
     >
+      {loading && (
+        <div className="h-full absolute flex items-center justify-center left-0 right-0">
+          <CircularProgress />
+        </div>
+      )}
       <div className="w-full lg:w-3/5 flex justify-center lg:inline-block">
         <img src={logo} alt="Chitchat" className="h-[200px] md:h-full"></img>
       </div>
@@ -45,7 +56,6 @@ function Login() {
             placeholder="Email"
             className="rounded-lg border-2 border-inherit w-full p-2.5 mb-2.5"
           ></input>
-
           <input
             type="password"
             placeholder="Password"
@@ -55,9 +65,9 @@ function Login() {
             type="submit"
             className="w-full p-2.5 mb-2.5 rounded-lg bg-sky-700 text-white"
           >
-            Login
-          </button>
-        </form>
+            Login{" "}
+          </button>{" "}
+        </form>{" "}
         <div className=" text-center mb-4 text-white">
           <a href="#">Forgotten Password?</a>
         </div>
