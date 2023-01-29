@@ -48,6 +48,7 @@ function Login() {
         style={{
           background: "linear-gradient(90deg, #000000, #0d274c)",
           opacity: `${loading ? "0.5" : "1"}`,
+          pointerEvents: `${loading ? "none" : "fill"}`,
         }}
       >
         <div className="w-full lg:w-3/5 flex justify-center lg:inline-block">
